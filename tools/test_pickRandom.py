@@ -1,7 +1,6 @@
 import unittest
 from tools.pickRandom import PickRandom
 
-
 def test_rand2():
     samples = 1000
     zeros = ones = 0

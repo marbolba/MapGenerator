@@ -6,7 +6,6 @@ from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 unused import
 
 
 # TODO add region avg height report
-# TODO! alg increaseRes favorize one of dimensions
 class Generator:
 
     def __init__(self):
@@ -17,7 +16,7 @@ class Generator:
         def __init__(self):
             self.minVal = 0
             self.maxVal = 10
-            self.initialResolution = (3,30)
+            self.initialResolution = (3, 5)
             self.incrementNumber = 5
 
         def set(self, min=1, max=2, resolution=(5, 5), incrementNumber=5):
@@ -27,14 +26,12 @@ class Generator:
             self.incrementNumber = incrementNumber
 
     def generate(self):
-        self.terrain = np.random.randint(self.settings.minVal, self.settings.maxVal, self.settings.initialResolution)
-        for i in range(self.settings.incrementNumber):
-            self.__increaseRes()
-            self.drawSurf()
-        self.__smoothAltitude(10, 5, 0.2)
-        # self.drawMap()
-        # self.drawMap()
+        self.__generateInitialTerrain()
+        self.__increaseResolution()
+        self.__smoothSharpEdges()
+        self.__smoothAltitude(4, 3, 0.3)
         self.drawSurf()
+        self.drawMap()
 
     def drawMap(self):
         plt.matshow(self.terrain)
@@ -47,11 +44,19 @@ class Generator:
         X = np.arange(0, len(self.terrain[0]), 1)
         Y = np.arange(0, len(self.terrain), 1)
         X, Y = np.meshgrid(X, Y)
-        surf = ax.plot_surface(X, Y, self.terrain, cmap='rainbow')
+        surf = ax.plot_surface(X, Y, self.terrain, cmap='rainbow', linewidth=0, antialiased=True)
         # fig.colorbar(surf, shrink=0.5, aspect=5)
         plt.show()
 
-    def __increaseRes(self):
+    def __generateInitialTerrain(self):
+        self.terrain = np.random.randint(self.settings.minVal, self.settings.maxVal, self.settings.initialResolution)
+        print(self.terrain)
+
+    def __increaseResolution(self):
+        for i in range(self.settings.incrementNumber):
+            self.__incrementResolution()
+
+    def __incrementResolution(self):
         newMap = np.empty([len(self.terrain) + len(self.terrain) - 1, len(self.terrain[0]) + len(self.terrain[0]) - 1])
         newMap[:] = np.nan
 
@@ -71,17 +76,18 @@ class Generator:
             for j in range(len(newMap[0])):
                 if np.isnan(newMap[i][j]):
                     if i % 2 == 0:
-                        newMap[i][j] = PickRandom.rand3(newMap[i][j - 1], newMap[i][j + 1],
-                                                        (newMap[i][j - 1] + newMap[i][j + 1]) / 2)
+                        newMap[i][j] = PickRandom.rand(newMap[i][j - 1], newMap[i][j + 1],
+                                                       (newMap[i][j - 1] + newMap[i][j + 1]) / 2)
                     elif i % 2 == 1:
                         if j % 2 == 0:
-                            newMap[i][j] = PickRandom.rand3(newMap[i - 1][j], newMap[i + 1][j],
-                                                            (newMap[i - 1][j] + newMap[i + 1][j]) / 2)
-                        else:
-                            # problem z mixem ( od dolu sa NaN-e )
-                            newMap[i][j] = PickRandom.rand4(newMap[i - 1][j - 1], newMap[i - 1][j + 1],
-                                                            newMap[i + 1][j - 1],
-                                                            newMap[i + 1][j + 1])
+                            newMap[i][j] = PickRandom.rand(newMap[i - 1][j], newMap[i + 1][j],
+                                                           (newMap[i - 1][j] + newMap[i + 1][j]) / 2)
+
+        # fill middles
+        for i in range(len(newMap)):
+            for j in range(len(newMap[0])):
+                if np.isnan(newMap[i][j]):
+                    newMap[i][j] = PickRandom.rand(newMap[i - 1][j], newMap[i + 1][j], newMap[i][j - 1], newMap[i][j + 1])
         self.terrain = newMap
 
     # smooths surface to remove sharp terrain changes
@@ -89,8 +95,7 @@ class Generator:
         for i in range(len(self.terrain)):
             for j in range(len(self.terrain[0])):
                 if i != 0 and j != 0 and i != len(self.terrain) - 1 and j != len(self.terrain[0]) - 1:
-                    if self.terrain[i - 1][j] == self.terrain[i + 1][j] and self.terrain[i][j - 1] == self.terrain[i][
-                        j + 1]:
+                    if self.terrain[i - 1][j] == self.terrain[i + 1][j] and self.terrain[i][j - 1] == self.terrain[i][j + 1]:
                         self.terrain[i][j] = PickRandom.rand2(self.terrain[i - 1][j], self.terrain[i][j - 1])
                     elif self.terrain[i - 1][j] == self.terrain[i + 1][j]:
                         self.terrain[i][j] = self.terrain[i - 1][j]
