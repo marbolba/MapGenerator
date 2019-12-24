@@ -4,6 +4,17 @@ import random
 class PickRandom:
 
     @staticmethod
+    def rand(v1=None,v2=None,v3=None,v4=None):
+        if v4 is not None:
+            return PickRandom.rand4(v1,v2,v3,v4)
+        elif v3 is not None:
+            return PickRandom.rand3(v1,v2,v3)
+        elif v2 is not None:
+            return PickRandom.rand2(v1,v2)
+        elif v1 is not None:
+            return v1
+
+    @staticmethod
     def rand2(v1, v2):
         return v1 if random.random() <= 0.5 else v2
 
