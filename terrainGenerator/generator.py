@@ -50,14 +50,14 @@ class Generator:
 
     def __generateInitialTerrain(self):
         # self.terrain = np.random.randint(self.settings.minVal, self.settings.maxVal, self.settings.initialResolution)
-        self.terrain = [[3,2,1,9,4,3,2,8],
-                        [2,5,3,7,2,6,4,9],
-                        [7,9,5,3,2,8,6,1]]
+        self.terrain = [[3, 2, 1, 9, 4, 3, 2, 8],
+                        [2, 5, 3, 7, 2, 6, 4, 9],
+                        [7, 9, 5, 3, 2, 8, 6, 1]]
 
     def __increaseResolution(self):
         for i in range(self.settings.incrementNumber):
             self.__incrementResolution()
-        print("Final terrain resolution:",(len(self.terrain),len(self.terrain[0])))
+        print("Final terrain resolution:", (len(self.terrain), len(self.terrain[0])))
 
     def __incrementResolution(self):
         newMap = np.empty([len(self.terrain) + len(self.terrain) - 1, len(self.terrain[0]) + len(self.terrain[0]) - 1])
@@ -158,6 +158,12 @@ class Generator:
                     else:
                         # half of remaining increment
                         self.terrain[yIdx, xIdx] = self.terrain[yIdx, xIdx] + (regionMean - self.terrain[yIdx, xIdx]) / 2
+
+    def __saveToFile(self, fileName):
+        np.save(fileName, self.terrain)
+
+    def __readFromFile(self, fileName):
+        return np.load(fileName)
 
 
 if __name__ == '__main__':
