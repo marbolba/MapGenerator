@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -9,6 +11,8 @@ from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 unused import
 class Generator:
 
     def __init__(self):
+        self.label = "_last"
+        self.folderPath = "/plots/"
         self.settings = self.Settings()
         self.terrain = []
 
@@ -36,6 +40,8 @@ class Generator:
     def drawMap(self):
         plt.matshow(self.terrain)
         plt.colorbar()
+        self.checkIfFolderExists()
+        plt.savefig("{}{}-2d.png".format(self.folderPath, self.label))
         plt.show()
 
     def drawSurf(self):
@@ -46,6 +52,8 @@ class Generator:
         X, Y = np.meshgrid(X, Y)
         surf = ax.plot_surface(X, Y, self.terrain, cmap='rainbow', linewidth=0, antialiased=True)
         # fig.colorbar(surf, shrink=0.5, aspect=5)
+        self.checkIfFolderExists()
+        plt.savefig("{}{}-3d.png".format(self.folderPath, self.label))
         plt.show()
 
     def __generateInitialTerrain(self):
@@ -163,10 +171,20 @@ class Generator:
                         # half of remaining increment
                         self.terrain[yIdx, xIdx] = self.terrain[yIdx, xIdx] + (regionMean - self.terrain[yIdx, xIdx]) / 2
 
-    def saveToFile(self, fileName):
-        np.save(fileName, self.terrain)
+    def probeName(self, label):
+        self.label = label
+
+    def outputFolder(self, folderPath):
+        self.folderPath = folderPath
+
+    def saveToFile(self):
+        self.checkIfFolderExists()
+        np.save("{}{}".format(self.folderPath, self.label), self.terrain)
+
+    def checkIfFolderExists(self):
+        if not (os.path.exists(self.folderPath)):
+            # create the directory you want to save to
+            os.mkdir(self.folderPath)
 
     def readFromFile(self, fileName):
-        return np.load(fileName)
-
-
+        return np.load("plots/{}".format(fileName))
