@@ -10,6 +10,6 @@ if __name__ == '__main__':
 
     g = Generator()
     g.outputFolder(file)
-    g.probeName('terrainLabel')
+    g.probeName('terrain')
     g.generate()
     g.saveToFile()

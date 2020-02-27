@@ -63,8 +63,8 @@ class Generator:
         #                 [2, 5, 3, 7, 2, 6, 4, 9],
         #                 [7, 9, 5, 3, 2, 8, 6, 1]]
         self.terrain = [[2, 2, 8, 8, 2, 2],
-                        [2, 2, 8, 8, 2, 2],
-                        [8, 2, 2, 2, 2, 8]]
+                        [2, 2, 4, 4, 2, 2],
+                        [6, 2, 2, 2, 2, 6]]
 
     def __increaseResolution(self):
         for i in range(self.settings.incrementNumber):
@@ -180,6 +180,8 @@ class Generator:
     def saveToFile(self):
         self.checkIfFolderExists()
         np.save("{}{}".format(self.folderPath, self.label), self.terrain)
+        terrainSize = (len(self.terrain), len(self.terrain[0]))
+        np.save("{}size".format(self.folderPath), terrainSize)
 
     def checkIfFolderExists(self):
         if not (os.path.exists(self.folderPath)):
