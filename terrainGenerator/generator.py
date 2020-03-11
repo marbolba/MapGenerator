@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from tools.pickRandom import PickRandom
+from settings.generatorSettings import GeneratorSettings
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 unused import
 
 
@@ -13,21 +14,7 @@ class Generator:
     def __init__(self):
         self.label = "_last"
         self.folderPath = "/plots/"
-        self.settings = self.Settings()
         self.terrain = []
-
-    class Settings:
-        def __init__(self):
-            self.minVal = 0
-            self.maxVal = 10
-            self.initialResolution = (3, 5)
-            self.incrementNumber = 5
-
-        def set(self, min=1, max=2, resolution=(5, 5), incrementNumber=5):
-            self.minVal = min
-            self.maxVal = max
-            self.initialResolution = resolution
-            self.incrementNumber = incrementNumber
 
     def generate(self):
         self.__generateInitialTerrain()
@@ -57,17 +44,10 @@ class Generator:
         plt.show()
 
     def __generateInitialTerrain(self):
-        # self.terrain = np.random.randint(self.settings.minVal, self.settings.maxVal, self.settings.initialResolution)
-        # S-type terrain
-        # self.terrain = [[3, 2, 1, 9, 4, 3, 2, 8],
-        #                 [2, 5, 3, 7, 2, 6, 4, 9],
-        #                 [7, 9, 5, 3, 2, 8, 6, 1]]
-        self.terrain = [[2, 2, 8, 8, 2, 2],
-                        [2, 2, 4, 4, 2, 2],
-                        [6, 2, 2, 2, 2, 6]]
+        self.terrain = GeneratorSettings.getSeedArray()
 
     def __increaseResolution(self):
-        for i in range(self.settings.incrementNumber):
+        for i in range(GeneratorSettings.incrementNumber):
             self.__incrementResolution()
         print("Final terrain resolution:", (len(self.terrain), len(self.terrain[0])))
 
