@@ -2,7 +2,7 @@ from terrainGenerator.generator import Generator
 from tools.fileHandler import FileHandler
 from tools.terrainDrawer import TerrainDrawer
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     g = Generator()
     g.generate()
 

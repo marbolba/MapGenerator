@@ -1,6 +1,7 @@
 import unittest
 from tools.pickRandom import PickRandom
 
+
 def test_rand2():
     samples = 1000
     zeros = ones = 0
@@ -25,7 +26,7 @@ def test_rand3():
             ones += 1
         else:
             twos += 1
-    assert zeros + ones + twos  == samples
+    assert zeros + ones + twos == samples
     assert zeros > samples / 3 - 0.1 * samples
     assert ones > samples / 3 - 0.1 * samples
     assert twos > samples / 3 - 0.1 * samples
@@ -51,5 +52,5 @@ def test_rand4():
     assert tres > samples / 4 - 0.1 * samples
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
