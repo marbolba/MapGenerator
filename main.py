@@ -11,5 +11,4 @@ if __name__ == '__main__':
     FileHandler.saveToFile(resultTerrain)
     FileHandler.saveTerrain2D(resultTerrain)
     FileHandler.saveTerrain3D(resultTerrain)
-    TerrainDrawer.drawTerrain2D(resultTerrain)
     TerrainDrawer.drawTerrain3D(resultTerrain)

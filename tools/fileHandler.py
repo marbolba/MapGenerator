@@ -27,6 +27,7 @@ class FileHandler:
         plt = TerrainDrawer.getPlot2D(terrain)
         FileHandler.checkIfFolderExists()
         plt.savefig("{}{}-2d.png".format(FileHandler.folderPath, FileHandler.defaultName))
+        plt.close()
 
 
     @staticmethod
@@ -34,3 +35,4 @@ class FileHandler:
         plt = TerrainDrawer.getPlot3D(terrain)
         FileHandler.checkIfFolderExists()
         plt.savefig("{}{}-3d.png".format(FileHandler.folderPath, FileHandler.defaultName))
+        plt.close()
