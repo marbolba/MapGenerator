@@ -15,7 +15,6 @@ class GeneratorSettings:
 
     @staticmethod
     def getSeedArray():
-        print("get seed")
         if(GeneratorSettings.manualSeed):
             return GeneratorSettings.manualSeedArray
         else:

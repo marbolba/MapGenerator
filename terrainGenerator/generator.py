@@ -1,19 +1,13 @@
-import os
-
 import numpy as np
-import matplotlib.pyplot as plt
 
 from tools.pickRandom import PickRandom
 from settings.generatorSettings import GeneratorSettings
-from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 unused import
 
 
 # TODO add region avg height report
 class Generator:
 
     def __init__(self):
-        self.label = "_last"
-        self.folderPath = "/plots/"
         self.terrain = []
 
     def generate(self):
@@ -21,27 +15,9 @@ class Generator:
         self.__increaseResolution()
         self.__smoothSharpEdges()
         self.__smoothAltitude(4, 3, 0.3)
-        self.drawSurf()
-        self.drawMap()
 
-    def drawMap(self):
-        plt.matshow(self.terrain)
-        plt.colorbar()
-        self.checkIfFolderExists()
-        plt.savefig("{}{}-2d.png".format(self.folderPath, self.label))
-        plt.show()
-
-    def drawSurf(self):
-        fig = plt.figure()
-        ax = fig.gca(projection='3d')
-        X = np.arange(0, len(self.terrain[0]), 1)
-        Y = np.arange(0, len(self.terrain), 1)
-        X, Y = np.meshgrid(X, Y)
-        surf = ax.plot_surface(X, Y, self.terrain, cmap='rainbow', linewidth=0, antialiased=True)
-        # fig.colorbar(surf, shrink=0.5, aspect=5)
-        self.checkIfFolderExists()
-        plt.savefig("{}{}-3d.png".format(self.folderPath, self.label))
-        plt.show()
+    def getResult(self):
+        return self.terrain
 
     def __generateInitialTerrain(self):
         self.terrain = GeneratorSettings.getSeedArray()
@@ -150,23 +126,3 @@ class Generator:
                     else:
                         # half of remaining increment
                         self.terrain[yIdx, xIdx] = self.terrain[yIdx, xIdx] + (regionMean - self.terrain[yIdx, xIdx]) / 2
-
-    def probeName(self, label):
-        self.label = label
-
-    def outputFolder(self, folderPath):
-        self.folderPath = folderPath
-
-    def saveToFile(self):
-        self.checkIfFolderExists()
-        np.save("{}{}".format(self.folderPath, self.label), self.terrain)
-        terrainSize = (len(self.terrain), len(self.terrain[0]))
-        np.save("{}size".format(self.folderPath), terrainSize)
-
-    def checkIfFolderExists(self):
-        if not (os.path.exists(self.folderPath)):
-            # create the directory you want to save to
-            os.mkdir(self.folderPath)
-
-    def readFromFile(self, fileName):
-        return np.load("plots/{}".format(fileName))

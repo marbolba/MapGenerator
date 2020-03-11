@@ -1,15 +1,15 @@
-from datetime import datetime
-
 from terrainGenerator.generator import Generator
+from tools.fileHandler import FileHandler
+from tools.terrainDrawer import TerrainDrawer
 
 if __name__ == '__main__':
-    # generate foler name
-    dateTimeObj = datetime.now()
-    timestampStr = dateTimeObj.strftime("%d-%b-%Y_%H%M%S")
-    file = "plots/{}/".format(timestampStr)
-
     g = Generator()
-    g.outputFolder(file)
-    g.probeName('terrain')
     g.generate()
-    g.saveToFile()
+
+    # save results to file
+    resultTerrain = g.getResult()
+    FileHandler.saveToFile(resultTerrain)
+    FileHandler.saveTerrain2D(resultTerrain)
+    FileHandler.saveTerrain3D(resultTerrain)
+    TerrainDrawer.drawTerrain2D(resultTerrain)
+    TerrainDrawer.drawTerrain3D(resultTerrain)
