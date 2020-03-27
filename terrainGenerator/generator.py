@@ -8,18 +8,29 @@ from settings.generatorSettings import GeneratorSettings
 class Generator:
     def __init__(self):
         self.terrain = []
+        self.terrainAccessibility = []
 
     def generate(self):
         self.__generateInitialTerrain()
         self.__increaseResolution()
         self.__smoothSharpEdges()
         self.__smoothAltitude(4, 3, 0.3)
+        print("Final terrain resolution:", (len(self.terrain), len(self.terrain[0])))
+
+        # generate accessibility mesh
+        # self.__generateAccessibilityMesh()
+        # self.__increaseResolution(self.terrainAccessibility)
+        # self.__smoothSharpEdges(self.terrainAccessibility)
+        # print("Final mesh resolution:", (len(self.terrainAccessibility), len(self.terrainAccessibility[0])))
 
     def getResult(self):
         return self.terrain
 
     def __generateInitialTerrain(self):
-        self.terrain = GeneratorSettings.getSeedArray()
+        self.terrain = GeneratorSettings.getTerrainSeed()
+
+    def __generateAccessibilityMesh(self):
+        self.terrainAccessibility = GeneratorSettings.getAccessibilitySeed()
 
     def __increaseResolution(self):
         for i in range(GeneratorSettings.incrementNumber):
