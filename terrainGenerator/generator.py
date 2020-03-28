@@ -12,16 +12,16 @@ class Generator:
 
     def generate(self):
         self.__generateInitialTerrain()
-        self.__increaseResolution()
-        self.__smoothSharpEdges()
+        self.terrain = self.__increaseResolution(self.terrain)
+        self.terrain = self.__smoothSharpEdges(self.terrain)
         self.__smoothAltitude(4, 3, 0.3)
         print("Final terrain resolution:", (len(self.terrain), len(self.terrain[0])))
 
         # generate accessibility mesh
-        # self.__generateAccessibilityMesh()
-        # self.__increaseResolution(self.terrainAccessibility)
+        self.__generateAccessibilityMesh()
+        self.terrainAccessibility = self.__increaseResolution(self.terrainAccessibility)
         # self.__smoothSharpEdges(self.terrainAccessibility)
-        # print("Final mesh resolution:", (len(self.terrainAccessibility), len(self.terrainAccessibility[0])))
+        print("Final mesh resolution:", (len(self.terrainAccessibility), len(self.terrainAccessibility[0])))
 
     def getResult(self):
         return self.terrain
@@ -32,30 +32,30 @@ class Generator:
     def __generateAccessibilityMesh(self):
         self.terrainAccessibility = GeneratorSettings.getAccessibilitySeed()
 
-    def __increaseResolution(self):
+    def __increaseResolution(self,terrain):
         for i in range(GeneratorSettings.incrementNumber):
-            self.__incrementResolution()
-        print("Final terrain resolution:", (len(self.terrain), len(self.terrain[0])))
+            terrain = self.__incrementResolution(terrain)
+        return terrain
 
-    def __incrementResolution(self):
+    def __incrementResolution(self,terrain):
         newMap = np.empty(
             [
-                len(self.terrain) + len(self.terrain) - 1,
-                len(self.terrain[0]) + len(self.terrain[0]) - 1,
+                len(terrain) + len(terrain) - 1,
+                len(terrain[0]) + len(terrain[0]) - 1,
             ]
         )
         newMap[:] = np.nan
 
         # Fill with known values
-        for i in range(len(self.terrain)):
-            for j in range(len(self.terrain[0])):
+        for i in range(len(terrain)):
+            for j in range(len(terrain[0])):
                 ii = i
                 ij = j
                 if i != 0:
                     ii = i * 2
                 if j != 0:
                     ij = j * 2
-                newMap[ii][ij] = self.terrain[i][j]
+                newMap[ii][ij] = terrain[i][j]
 
         # Fill with new values
         for i in range(len(newMap)):
@@ -85,29 +85,30 @@ class Generator:
                         newMap[i][j - 1],
                         newMap[i][j + 1],
                     )
-        self.terrain = newMap
+        return newMap
 
     # smooths surface to remove sharp terrain changes
-    def __smoothSharpEdges(self):
-        for i in range(len(self.terrain)):
-            for j in range(len(self.terrain[0])):
+    def __smoothSharpEdges(self,terrain):
+        for i in range(len(terrain)):
+            for j in range(len(terrain[0])):
                 if (
                     i != 0
                     and j != 0
-                    and i != len(self.terrain) - 1
-                    and j != len(self.terrain[0]) - 1
+                    and i != len(terrain) - 1
+                    and j != len(terrain[0]) - 1
                 ):
                     if (
-                        self.terrain[i - 1][j] == self.terrain[i + 1][j]
-                        and self.terrain[i][j - 1] == self.terrain[i][j + 1]
+                        terrain[i - 1][j] == terrain[i + 1][j]
+                        and terrain[i][j - 1] == terrain[i][j + 1]
                     ):
-                        self.terrain[i][j] = PickRandom.rand2(
-                            self.terrain[i - 1][j], self.terrain[i][j - 1]
+                        terrain[i][j] = PickRandom.rand2(
+                            terrain[i - 1][j], terrain[i][j - 1]
                         )
-                    elif self.terrain[i - 1][j] == self.terrain[i + 1][j]:
-                        self.terrain[i][j] = self.terrain[i - 1][j]
-                    elif self.terrain[i][j - 1] == self.terrain[i][j + 1]:
-                        self.terrain[i][j] = self.terrain[i][j - 1]
+                    elif terrain[i - 1][j] == terrain[i + 1][j]:
+                        terrain[i][j] = terrain[i - 1][j]
+                    elif terrain[i][j - 1] == terrain[i][j + 1]:
+                        terrain[i][j] = terrain[i][j - 1]
+        return terrain
 
     # smooth to avenage terrain changes
     def __smoothAltitude(self, smoothSize=4, smoothStep=2, smoothRatio=0.25):
