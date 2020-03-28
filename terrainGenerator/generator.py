@@ -20,11 +20,14 @@ class Generator:
         # generate accessibility mesh
         self.__generateAccessibilityMesh()
         self.terrainAccessibility = self.__increaseResolution(self.terrainAccessibility)
-        # self.__smoothSharpEdges(self.terrainAccessibility)
+        self.terrainAccessibility = self.__smoothSharpEdges(self.terrainAccessibility)
         print("Final mesh resolution:", (len(self.terrainAccessibility), len(self.terrainAccessibility[0])))
 
-    def getResult(self):
+    def getTerrain(self):
         return self.terrain
+
+    def getAccessibility(self):
+        return self.terrainAccessibility
 
     def __generateInitialTerrain(self):
         self.terrain = GeneratorSettings.getTerrainSeed()

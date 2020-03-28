@@ -3,6 +3,7 @@ import numpy as np
 
 class GeneratorSettings:
     manualSeed = False
+    normalDistribution = True
 
     # manual settings
     terrainSeed = [ [2, 2, 2, 2, 2, 2],
@@ -27,7 +28,7 @@ class GeneratorSettings:
     # auto settings
     # terrain
     minVal = 0
-    maxVal = 5
+    maxVal = 10
     initialResolution = (5, 5)
     incrementNumber = 5
 
@@ -40,10 +41,16 @@ class GeneratorSettings:
         if GeneratorSettings.manualSeed:
             return GeneratorSettings.terrainSeed
         else:
-            return np.random.randint(GeneratorSettings.minVal,GeneratorSettings.maxVal+1,GeneratorSettings.initialResolution)
+            if GeneratorSettings.normalDistribution:
+                return abs(np.random.normal(GeneratorSettings.minVal, GeneratorSettings.maxVal/3,GeneratorSettings.initialResolution))
+            else:
+                return np.random.randint(GeneratorSettings.minVal,GeneratorSettings.maxVal+1,GeneratorSettings.initialResolution)
 
     def getAccessibilitySeed():
         if GeneratorSettings.manualSeed:
             return GeneratorSettings.accessibilitySeed
         else:
-            return np.random.randint(GeneratorSettings.minAccessVal,GeneratorSettings.maxAccessVal+1,GeneratorSettings.initialResolution)
+            if GeneratorSettings.normalDistribution:
+                return abs(np.random.normal(GeneratorSettings.minAccessVal, GeneratorSettings.maxAccessVal/3,GeneratorSettings.initialResolution))
+            else:
+                return np.random.randint(GeneratorSettings.minAccessVal,GeneratorSettings.maxAccessVal+1,GeneratorSettings.initialResolution)

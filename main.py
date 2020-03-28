@@ -7,8 +7,11 @@ if __name__ == "__main__":
     g.generate()
 
     # save results to file
-    resultTerrain = g.getResult()
+    resultTerrain = g.getTerrain()
+    resultAccessibility = g.getAccessibility()
+    
     FileHandler.saveToFile(resultTerrain)
     FileHandler.saveTerrain2D(resultTerrain)
     FileHandler.saveTerrain3D(resultTerrain)
     TerrainDrawer.drawTerrain3D(resultTerrain)
+    TerrainDrawer.drawTerrain3D(resultAccessibility)
