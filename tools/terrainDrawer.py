@@ -13,7 +13,10 @@ class TerrainDrawer:
     @staticmethod
     def drawTerrain2D(terrain: []):
         plt.matshow(terrain)
-        plt.colorbar()
+        cbar = plt.colorbar()
+        cbar.set_label("Z")
+        plt.xlabel("X")
+        plt.ylabel("Y")
         plt.show()
 
     @staticmethod
@@ -26,6 +29,9 @@ class TerrainDrawer:
         surf = ax.plot_surface(
             X, Y, terrain, cmap="rainbow", linewidth=0, antialiased=True
         )
+        plt.xlabel("X")
+        plt.ylabel("Y")
+        plt.zlabel("Z")
         # fig.colorbar(surf, shrink=0.5, aspect=5)
         return plt
 
@@ -39,5 +45,8 @@ class TerrainDrawer:
         surf = ax.plot_surface(
             X, Y, terrain, cmap="rainbow", linewidth=0, antialiased=True
         )
+        plt.xlabel("X")
+        plt.ylabel("Y")
+        ax.set_zlabel("Z")
         # fig.colorbar(surf, shrink=0.5, aspect=5)
         plt.show()

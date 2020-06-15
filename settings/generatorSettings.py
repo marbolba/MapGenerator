@@ -6,24 +6,31 @@ class GeneratorSettings:
     normalDistribution = True
 
     # manual settings
-    terrainSeed = [ [2, 2, 2, 2, 2, 2],
-                    [2, 2, 2, 2, 2, 2], 
-                    [8, 8, 8, 8, 2, 2], 
-                    [6, 2, 2, 2, 2, 6], 
-                    [6, 2, 8, 8, 8, 8], 
-                    [6, 2, 2, 2, 2, 6], 
-                    [6, 8, 8, 8, 1, 6], 
-                    [6, 6, 6, 2, 2, 2]]
+    terrainSeed = [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [5, 3, 4, 3, 5, 4, 2, 1, 1, 1],
+        [8, 8, 9, 7, 8, 7, 6, 1, 1, 1],
+        [1, 1, 1, 1, 1, 5, 7, 1, 1, 1],
+        [1, 1, 1, 1, 1, 4, 6, 1, 1, 1],
+        [1, 1, 1, 4, 6, 8, 5, 1, 1, 1],
+        [1, 1, 1, 1, 5, 5, 4, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    ]
 
-    accessibilitySeed =  [ [1, 1, 1, 1, 1, 1],
-                    [1, 1, 1, 1, 1, 1], 
-                    [0, 0, 0, 0, 0, 0], 
-                    [0, 0, 0, 0, 0, 0], 
-                    [0, 0, 0, 0, 0, 0], 
-                    [1, 1, 1, 1, 1, 1], 
-                    [1, 1, 1, 1, 1, 1], 
-                    [1, 1, 1, 1, 1, 1]]
-
+    accessibilitySeed = [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [5, 3, 4, 3, 5, 4, 2, 1, 1, 1],
+        [8, 8, 9, 7, 8, 7, 6, 1, 1, 1],
+        [1, 1, 1, 1, 1, 5, 7, 1, 1, 1],
+        [1, 1, 1, 1, 1, 4, 6, 1, 1, 1],
+        [1, 1, 1, 4, 6, 8, 5, 1, 1, 1],
+        [1, 1, 1, 1, 5, 5, 4, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    ]
 
     # auto settings
     # terrain
@@ -42,15 +49,35 @@ class GeneratorSettings:
             return GeneratorSettings.terrainSeed
         else:
             if GeneratorSettings.normalDistribution:
-                return abs(np.random.normal(GeneratorSettings.minVal, GeneratorSettings.maxVal/3,GeneratorSettings.initialResolution))
+                return abs(
+                    np.random.normal(
+                        GeneratorSettings.minVal,
+                        GeneratorSettings.maxVal / 1.5,
+                        GeneratorSettings.initialResolution,
+                    )
+                )
             else:
-                return np.random.randint(GeneratorSettings.minVal,GeneratorSettings.maxVal+1,GeneratorSettings.initialResolution)
+                return np.random.randint(
+                    GeneratorSettings.minVal,
+                    GeneratorSettings.maxVal + 1,
+                    GeneratorSettings.initialResolution,
+                )
 
     def getAccessibilitySeed():
         if GeneratorSettings.manualSeed:
             return GeneratorSettings.accessibilitySeed
         else:
             if GeneratorSettings.normalDistribution:
-                return abs(np.random.normal(GeneratorSettings.minAccessVal, GeneratorSettings.maxAccessVal/3,GeneratorSettings.initialResolution))
+                return abs(
+                    np.random.normal(
+                        GeneratorSettings.minAccessVal,
+                        GeneratorSettings.maxAccessVal / 3,
+                        GeneratorSettings.initialResolution,
+                    )
+                )
             else:
-                return np.random.randint(GeneratorSettings.minAccessVal,GeneratorSettings.maxAccessVal+1,GeneratorSettings.initialResolution)
+                return np.random.randint(
+                    GeneratorSettings.minAccessVal,
+                    GeneratorSettings.maxAccessVal + 1,
+                    GeneratorSettings.initialResolution,
+                )

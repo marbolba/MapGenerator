@@ -11,11 +11,11 @@ class FileHandler:
     defaultName = "terrain"
 
     @staticmethod
-    def saveToFile(terrain: [],name=defaultName):
+    def saveToFile(terrain: [], name=defaultName):
         FileHandler.checkIfFolderExists()
         np.save("{}{}".format(FileHandler.folderPath, name), terrain)
         terrainSize = (len(terrain), len(terrain[0]))
-        np.save("{}{}-size".format(FileHandler.folderPath,name), terrainSize)
+        np.save("{}{}-size".format(FileHandler.folderPath, name), terrainSize)
 
     @staticmethod
     def checkIfFolderExists():
@@ -24,19 +24,19 @@ class FileHandler:
             os.mkdir(FileHandler.folderPath)
 
     @staticmethod
-    def saveTerrain2D(terrain,name=defaultName):
+    def saveTerrain2D(terrain, name=defaultName):
         plt = TerrainDrawer.getPlot2D(terrain)
         FileHandler.checkIfFolderExists()
-        plt.savefig(
-            "{}{}-2d.png".format(FileHandler.folderPath, name)
-        )
+        plt.savefig("{}{}-2d.png".format(FileHandler.folderPath, name))
         plt.close()
 
     @staticmethod
-    def saveTerrain3D(terrain,name=defaultName):
+    def saveTerrain3D(terrain, name=defaultName):
         plt = TerrainDrawer.getPlot3D(terrain)
         FileHandler.checkIfFolderExists()
-        plt.savefig(
-            "{}{}-3d.png".format(FileHandler.folderPath, name)
-        )
+        plt.savefig("{}{}-3d.png".format(FileHandler.folderPath, name))
         plt.close()
+
+    @staticmethod
+    def readFromFile(fileName):
+        return np.load(fileName)

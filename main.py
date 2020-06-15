@@ -2,7 +2,8 @@ from terrainGenerator.generator import Generator
 from tools.fileHandler import FileHandler
 from tools.terrainDrawer import TerrainDrawer
 
-if __name__ == "__main__":
+
+def runGenerator():
     g = Generator()
     g.generate()
 
@@ -10,13 +11,23 @@ if __name__ == "__main__":
     resultTerrain = g.getTerrain()
     resultAccessibility = g.getAccessibility()
 
-    FileHandler.saveToFile(resultTerrain,"terrain")
-    FileHandler.saveTerrain2D(resultTerrain,"terrain")
-    FileHandler.saveTerrain3D(resultTerrain,"terrain")
+    FileHandler.saveToFile(resultTerrain, "terrain")
+    FileHandler.saveTerrain2D(resultTerrain, "terrain")
+    FileHandler.saveTerrain3D(resultTerrain, "terrain")
 
-    FileHandler.saveToFile(resultAccessibility,"accessibility")
-    FileHandler.saveTerrain2D(resultAccessibility,"accessibility")
-    FileHandler.saveTerrain3D(resultAccessibility,"accessibility")
-    
+    FileHandler.saveToFile(resultAccessibility, "accessibility")
+    FileHandler.saveTerrain2D(resultAccessibility, "accessibility")
+    FileHandler.saveTerrain3D(resultAccessibility, "accessibility")
+
     TerrainDrawer.drawTerrain3D(resultTerrain)
     TerrainDrawer.drawTerrain3D(resultAccessibility)
+
+
+def showMap(case):
+    terrain = FileHandler.readFromFile(f"plots/{case}/terrain.npy")
+    TerrainDrawer.drawTerrain2D(terrain)
+    TerrainDrawer.drawTerrain3D(terrain)
+
+
+if __name__ == "__main__":
+    showMap("case3")

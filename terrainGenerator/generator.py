@@ -21,7 +21,10 @@ class Generator:
         self.__generateAccessibilityMesh()
         self.terrainAccessibility = self.__increaseResolution(self.terrainAccessibility)
         self.terrainAccessibility = self.__smoothSharpEdges(self.terrainAccessibility)
-        print("Final mesh resolution:", (len(self.terrainAccessibility), len(self.terrainAccessibility[0])))
+        print(
+            "Final mesh resolution:",
+            (len(self.terrainAccessibility), len(self.terrainAccessibility[0])),
+        )
 
     def getTerrain(self):
         return self.terrain
@@ -35,17 +38,14 @@ class Generator:
     def __generateAccessibilityMesh(self):
         self.terrainAccessibility = GeneratorSettings.getAccessibilitySeed()
 
-    def __increaseResolution(self,terrain):
+    def __increaseResolution(self, terrain):
         for i in range(GeneratorSettings.incrementNumber):
             terrain = self.__incrementResolution(terrain)
         return terrain
 
-    def __incrementResolution(self,terrain):
+    def __incrementResolution(self, terrain):
         newMap = np.empty(
-            [
-                len(terrain) + len(terrain) - 1,
-                len(terrain[0]) + len(terrain[0]) - 1,
-            ]
+            [len(terrain) + len(terrain) - 1, len(terrain[0]) + len(terrain[0]) - 1,]
         )
         newMap[:] = np.nan
 
@@ -91,7 +91,7 @@ class Generator:
         return newMap
 
     # smooths surface to remove sharp terrain changes
-    def __smoothSharpEdges(self,terrain):
+    def __smoothSharpEdges(self, terrain):
         for i in range(len(terrain)):
             for j in range(len(terrain[0])):
                 if (
