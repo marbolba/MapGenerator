@@ -31,7 +31,7 @@ class TerrainDrawer:
         )
         plt.xlabel("X")
         plt.ylabel("Y")
-        plt.zlabel("Z")
+        # plt.zlabel("Z")
         # fig.colorbar(surf, shrink=0.5, aspect=5)
         return plt
 
