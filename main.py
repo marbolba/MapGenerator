@@ -11,12 +11,16 @@ def runGenerator():
 
     # save results to file
     resultTerrain = g.getTerrain()
-    
+
     TerrainDrawer.drawTerrain3D(resultTerrain)
     GeneratorSettings.setWaypoints()
 
-    FileHandler.saveToFile(resultTerrain, GeneratorSettings.getWaypoints(), name="terrain")
-    FileHandler.saveTerrain2D(resultTerrain,GeneratorSettings.getWaypoints(), name="terrain")
+    FileHandler.saveToFile(
+        resultTerrain, GeneratorSettings.getWaypoints(), name="terrain"
+    )
+    FileHandler.saveTerrain2D(
+        resultTerrain, GeneratorSettings.getWaypoints(), name="terrain"
+    )
     FileHandler.saveTerrain3D(resultTerrain, name="terrain")
 
 
@@ -25,13 +29,20 @@ def showMap(case):
     TerrainDrawer.drawTerrain2D(terrain)
     TerrainDrawer.drawTerrain3D(terrain)
 
+
 def runAccessibilityGenerator():
-    g = AccessibilityGenerator(size=(225,129))
-    g.addLine(xbounds = (125,190),ywidth = 10,lineValue = 0.3,formula = lambda x: 0.3076923076923077*x+1.5384615384615385)
-    g.addLine(xbounds = (20,50),ywidth = 10,lineValue = 0.3,formula = lambda x: 40)
+    g = AccessibilityGenerator(size=(129, 129))
+    g.addLine(
+        ybounds=(37, 78),
+        lineValue=0.3,
+        xformula=lambda x: -1.64 * x + 192.8,
+        yformula=lambda y: 1 / (-1.64) * (y - 192.8),
+        xwidth=10,
+    )
     g.generateAccessibility()
-    
+
+
 if __name__ == "__main__":
-    # showMap("case3")
-    runGenerator()
+    showMap("21-cze-2020_025331")
+    # runGenerator()
     # runAccessibilityGenerator()

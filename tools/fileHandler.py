@@ -11,12 +11,13 @@ class FileHandler:
     defaultName = "terrain"
 
     @staticmethod
-    def saveToFile(terrain: [], waypoints:[], name=defaultName):
+    def saveToFile(terrain: [] = [], waypoints: [] = [], name=defaultName):
         FileHandler.checkIfFolderExists()
         np.save("{}{}".format(FileHandler.folderPath, name), terrain)
         terrainSize = (len(terrain), len(terrain[0]))
         np.save("{}{}-size".format(FileHandler.folderPath, name), terrainSize)
-        np.save("{}{}-waypoints".format(FileHandler.folderPath, name), waypoints)
+        if len(waypoints) != 0:
+            np.save("{}{}-waypoints".format(FileHandler.folderPath, name), waypoints)
 
     @staticmethod
     def checkIfFolderExists():
@@ -25,8 +26,8 @@ class FileHandler:
             os.mkdir(FileHandler.folderPath)
 
     @staticmethod
-    def saveTerrain2D(terrain, waypoints:[], name=defaultName):
-        plt = TerrainDrawer.drawTerrain2D(terrain,waypoints)
+    def saveTerrain2D(terrain, waypoints: [] = [], name=defaultName):
+        plt = TerrainDrawer.drawTerrain2D(terrain, waypoints)
         FileHandler.checkIfFolderExists()
         plt.savefig("{}{}-2d.png".format(FileHandler.folderPath, name))
         plt.close()

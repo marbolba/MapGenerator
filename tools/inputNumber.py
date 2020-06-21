@@ -1,4 +1,4 @@
-def inputNumber(text:str):
+def inputNumber(text: str):
     val = 0
     while True:
         try:

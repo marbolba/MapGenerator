@@ -4,12 +4,12 @@ from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 unused import
 
 
 class TerrainDrawer:
-
     @staticmethod
-    def drawTerrain2D(terrain: [],wayPoints:[]):
+    def drawTerrain2D(terrain: [], wayPoints: [] = []):
         plt.matshow(terrain)
-        plt.plot(wayPoints[0][0],wayPoints[0][1], 'o', color='green')
-        plt.plot(wayPoints[1][0],wayPoints[1][1], 'o', color='red')
+        if len(wayPoints) != 0:
+            plt.plot(wayPoints[0][0], wayPoints[0][1], "o", color="green")
+            plt.plot(wayPoints[1][0], wayPoints[1][1], "o", color="red")
         cbar = plt.colorbar()
         cbar.set_label("Z")
         plt.xlabel("X")

@@ -16,7 +16,6 @@ class Generator:
         self.__smoothAltitude(4, 3, 0.3)
         print("Final terrain resolution:", (len(self.terrain), len(self.terrain[0])))
 
-
     def getTerrain(self):
         return self.terrain
 

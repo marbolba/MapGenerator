@@ -1,6 +1,7 @@
 import numpy as np
 from tools.inputNumber import inputNumber
 
+
 class GeneratorSettings:
     manualSeed = False
     normalDistribution = True
@@ -19,14 +20,14 @@ class GeneratorSettings:
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     ]
 
-    startPoint = [0,0]
-    endPoint = [0,0]
+    startPoint = [0, 0]
+    endPoint = [0, 0]
 
     # auto settings
     # terrain
     minVal = 0
     maxVal = 10
-    initialResolution = (5, 5)
+    initialResolution = (10, 10)
     incrementNumber = 5
 
     @staticmethod
@@ -48,15 +49,16 @@ class GeneratorSettings:
                     GeneratorSettings.maxVal + 1,
                     GeneratorSettings.initialResolution,
                 )
+
     @staticmethod
     def getWaypoints():
-        return [GeneratorSettings.startPoint,GeneratorSettings.endPoint]
-                
+        return [GeneratorSettings.startPoint, GeneratorSettings.endPoint]
+
     @staticmethod
     def setWaypoints():
         x1 = inputNumber("Enter startPoint X : ")
         y1 = inputNumber("Enter startPoint Y : ")
         x2 = inputNumber("Enter endPoint X : ")
         y2 = inputNumber("Enter endPoint Y : ")
-        GeneratorSettings.startPoint = [x1,y1]
-        GeneratorSettings.endPoint = [x2,y2]
+        GeneratorSettings.startPoint = [x1, y1]
+        GeneratorSettings.endPoint = [x2, y2]
