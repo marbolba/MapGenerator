@@ -28,6 +28,7 @@ class TerrainDrawer:
         )
         plt.xlabel("X")
         plt.ylabel("Y")
+        plt.gca().invert_xaxis()
         # plt.zlabel("Z")
         # fig.colorbar(surf, shrink=0.5, aspect=5)
         return plt
