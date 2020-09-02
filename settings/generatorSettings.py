@@ -3,32 +3,30 @@ from tools.inputNumber import inputNumber
 
 
 class GeneratorSettings:
-    manualSeed = False
-    normalDistribution = True
 
-    # manual settings
-    terrainSeed = [
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [5, 3, 4, 3, 5, 4, 2, 1, 1, 1],
-        [8, 8, 9, 7, 8, 7, 6, 1, 1, 1],
-        [1, 1, 1, 1, 1, 5, 7, 1, 1, 1],
-        [1, 1, 1, 1, 1, 4, 6, 1, 1, 1],
-        [1, 1, 1, 4, 6, 8, 5, 1, 1, 1],
-        [1, 1, 1, 1, 5, 5, 4, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    ]
+    manualSeed = True
 
+    # general settings
+    incrementNumber = 5
     startPoint = [0, 0]
     endPoint = [0, 0]
 
+    # manual settings
+    terrainSeed = [
+        [1, 2, 5, 6, 3, 1],
+        [1, 2, 5, 6, 3, 1],
+        [1, 2, 4, 6, 3, 1],
+        [1, 1, 4, 6, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+    ]
+
     # auto settings
     # terrain
-    minVal = 0
-    maxVal = 10
-    initialResolution = (10, 10)
-    incrementNumber = 5
+    minVal = 1
+    maxVal = 3
+    initialResolution = (2, 9)
+    normalDistribution = False
 
     @staticmethod
     def getTerrainSeed():

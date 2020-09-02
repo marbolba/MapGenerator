@@ -3,6 +3,7 @@ from accessibilityGenerator.accessibilityGenerator import AccessibilityGenerator
 from tools.fileHandler import FileHandler
 from tools.terrainDrawer import TerrainDrawer
 from settings.generatorSettings import GeneratorSettings
+import numpy as np
 
 
 def runGenerator():
@@ -12,8 +13,9 @@ def runGenerator():
     # save results to file
     resultTerrain = g.getTerrain()
 
+    # TerrainDrawer.drawTerrain2D(resultTerrain)
     TerrainDrawer.drawTerrain3D(resultTerrain)
-    GeneratorSettings.setWaypoints()
+    # GeneratorSettings.setWaypoints()
 
     FileHandler.saveToFile(
         resultTerrain, GeneratorSettings.getWaypoints(), name="terrain"
@@ -26,7 +28,7 @@ def runGenerator():
 
 def showMap(case):
     terrain = FileHandler.readFromFile(f"plots/{case}/terrain.npy")
-    TerrainDrawer.drawTerrain2D(terrain)
+    TerrainDrawer.getPlot2D(terrain)
     TerrainDrawer.drawTerrain3D(terrain)
 
 
@@ -43,6 +45,6 @@ def runAccessibilityGenerator():
 
 
 if __name__ == "__main__":
-    showMap("21-cze-2020_025331")
-    # runGenerator()
+    # showMap("24-cze-2020_163110")
+    runGenerator()
     # runAccessibilityGenerator()
