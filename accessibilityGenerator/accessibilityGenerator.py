@@ -31,4 +31,4 @@ class AccessibilityGenerator:
     def generateAccessibility(self):
         FileHandler.saveToFile(self.resultAccessibility, name="accessibility")
         FileHandler.saveTerrain2D(self.resultAccessibility, name="accessibility")
-        TerrainDrawer.drawTerrain2D(self.resultAccessibility)
+        TerrainDrawer.getPlot2D(self.resultAccessibility)

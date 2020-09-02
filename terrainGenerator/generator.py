@@ -2,6 +2,7 @@ import numpy as np
 
 from tools.pickRandom import PickRandom
 from settings.generatorSettings import GeneratorSettings
+from tools.fileHandler import FileHandler
 
 
 # TODO add region avg height report
@@ -11,9 +12,15 @@ class Generator:
 
     def generate(self):
         self.__generateInitialTerrain()
+        FileHandler.saveTerrain2D(
+            self.terrain, [], name="terrain-seed"
+        )
         self.terrain = self.__increaseResolution(self.terrain)
+        FileHandler.saveTerrain2D(
+            self.terrain, [], name="terrain-before"
+        )
         self.terrain = self.__smoothSharpEdges(self.terrain)
-        self.__smoothAltitude(4, 3, 0.3)
+        self.__smoothAltitude(4, 2, 0.1)
         print("Final terrain resolution:", (len(self.terrain), len(self.terrain[0])))
 
     def getTerrain(self):

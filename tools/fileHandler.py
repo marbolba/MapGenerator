@@ -27,7 +27,7 @@ class FileHandler:
 
     @staticmethod
     def saveTerrain2D(terrain, waypoints: [] = [], name=defaultName):
-        plt = TerrainDrawer.drawTerrain2D(terrain, waypoints)
+        plt = TerrainDrawer.getPlot2D(terrain, waypoints)
         FileHandler.checkIfFolderExists()
         plt.savefig("{}{}-2d.png".format(FileHandler.folderPath, name))
         plt.close()

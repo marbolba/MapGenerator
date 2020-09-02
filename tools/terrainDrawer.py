@@ -5,7 +5,7 @@ from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 unused import
 
 class TerrainDrawer:
     @staticmethod
-    def drawTerrain2D(terrain: [], wayPoints: [] = []):
+    def getPlot2D(terrain: [], wayPoints: [] = []):
         plt.matshow(terrain)
         if len(wayPoints) != 0:
             plt.plot(wayPoints[0][0], wayPoints[0][1], "o", color="green")
@@ -36,4 +36,9 @@ class TerrainDrawer:
     @staticmethod
     def drawTerrain3D(terrain: []):
         plt = TerrainDrawer.getPlot3D(terrain)
+        plt.show()
+
+    @staticmethod
+    def drawTerrain2D(terrain: []):
+        plt = TerrainDrawer.getPlot2D(terrain)
         plt.show()
